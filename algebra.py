@@ -32,7 +32,7 @@ class AlgebraPorTabela(Algebra):
         return self._regras.get(produto, 0)
 
 
-class VerificadorAxiomas:
+class AvaliadorAlgebrico(ABC):
     def __init__(self, algebra: Algebra):
         self.algebra = algebra
 
@@ -58,6 +58,11 @@ class VerificadorAxiomas:
         yx = self.algebra.multiplicar_elementos(y, x)
 
         return sp.simplify(xy - yx)
+  
+
+class VerificadorAxiomas(AvaliadorAlgebrico):
+    def __init__(self, algebra: Algebra):
+        super().__init__(algebra)
 
     def associatividade(self):
         """
@@ -98,3 +103,30 @@ class VerificadorAxiomas:
             print(f"A álgebra é COMUTATIVA!")
 
         return comutativa    
+
+
+class VerificadorIdentidades(AvaliadorAlgebrico):
+    def __init__(self, algebra: Algebra):
+        super().__init__(algebra)
+
+    def alternatividade(self):
+        pares = itertools.product(self.algebra.base, repeat=2)
+        alternativa = True
+
+        for x, y in pares:
+            assoc_esquerda = self.calcular_associador_base(x, x, y)
+
+            if assoc_esquerda != 0:
+                print(f"[Falha na alternatividade] Não é alternativa na esquerda em ({x}, {x}, {y})")
+                alternativa = False
+
+            assoc_direita = self.calcular_associador_base(y, x, x)
+
+            if assoc_direita != 0:
+                print(f"[Falha na alternatividade] Não é alternativa na direita em ({y}, {x}, {x})")
+                alternativa = False 
+
+        if alternativa:
+            print("A álgebra é ALTERNATIVA!")
+
+        return alternativa
