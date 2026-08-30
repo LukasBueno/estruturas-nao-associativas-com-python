@@ -130,3 +130,19 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
             print("A álgebra é ALTERNATIVA!")
 
         return alternativa
+
+    def flexibilidade(self):
+        pares = itertools.product(self.algebra.base, repeat=2)
+        flexivel = True
+
+        for x, y in pares:
+            flex = self.calcular_associador_base(x, y, x)
+
+            if flex != 0:
+                print(f'[Falha na flexibilidade] Não é flexível em ({x}, {y}, {x}))')
+                flexivel = False
+
+        if flexivel:
+            print("A álgebra é FLEXÍVEL!")
+
+        return flexivel

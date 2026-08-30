@@ -23,6 +23,9 @@ def main():
 
     print("------[ALTERNATIVIDADE]------")
     verificador_id.alternatividade()
-       
+
+    print("------[FLEXIBILIDADE]------")
+    verificador_id.flexibilidade() 
+    
 if __name__ == "__main__":
     main()
