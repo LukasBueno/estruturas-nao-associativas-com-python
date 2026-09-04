@@ -18,9 +18,9 @@ def main():
 
     # Produtos cruzados (Plano de Fano)
     fano_triplas = [
-        (1, 2, 4), (2, 3, 5), (3, 4, 6), 
-        (4, 5, 7), (5, 6, 1), (6, 7, 2), (7, 1, 3)
-    ]
+        (3, 2, 1), (5, 4, 1), (5, 6, 3),
+        (6, 7, 1), (2, 7, 5), (3, 7, 4), (2, 6, 4)
+    ] 
 
     for i, j, k in fano_triplas:
         ei, ej, ek = base_octonios[i], base_octonios[j], base_octonios[k]
@@ -40,10 +40,16 @@ def main():
     verificador_id = VerificadorIdentidades(octonios)
 
     print("-------- ASSOCIATIVIDADE ---------")
-    print(verificador_ax.associatividade())
+    verificador_ax.associatividade()
+
+    print("-------- COMUTATIVIDADE ---------")
+    verificador_ax.comutatividade()
 
     print("-------- ALTERNATIVIDADE ---------")
-    print(verificador_id.alternatividade())
+    verificador_id.alternatividade()
+
+    print("-------- FLEXIBILIDADE ---------")
+    verificador_id.flexibilidade()
 
 if __name__ == "__main__":
     main()

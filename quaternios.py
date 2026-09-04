@@ -15,14 +15,17 @@ def main():
     verificador = VerificadorAxiomas(quaternios)
     verificador_id = VerificadorIdentidades(quaternios)
     
-    print("------[ASSOCIATIVIDADE]------")
+    print("------ASSOCIATIVIDADE------")
     verificador.associatividade()
 
-    print("------[COMUTATIVIDADE]------")
+    print("------COMUTATIVIDADE------")
     verificador.comutatividade()
 
-    print("------[ALTERNATIVIDADE]------")
+    print("------ALTERNATIVIDADE------")
     verificador_id.alternatividade()
+
+    print("------FLEXIBILIDADE------")
+    verificador_id.flexibilidade()   
     
 if __name__ == "__main__":
     main()
