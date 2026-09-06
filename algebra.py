@@ -38,7 +38,7 @@ class AvaliadorAlgebrico(ABC):
 
     def calcular_associador_base(self, x, y, z):
         """
-        Método destinado ao cálculo do Associador individualmente (x, y, z) = (xy)z - x(yz)
+        Método destinado ao cálculo do Associador individualmente: (x, y, z) = (xy)z - x(yz)
         """
         
         regras = getattr(self.algebra, 'regras', {})
@@ -54,6 +54,7 @@ class AvaliadorAlgebrico(ABC):
         """
         Método destinado ao cálculo do Comutador individualmente (x, y) = xy - yx
         """
+
         xy = self.algebra.multiplicar_elementos(x, y)
         yx = self.algebra.multiplicar_elementos(y, x)
 
@@ -66,7 +67,8 @@ class VerificadorAxiomas(AvaliadorAlgebrico):
 
     def associatividade(self):
         """
-        Método destinado à verificação da associatividade
+        Método destinado à verificação da associatividade, dado uma álgebra A
+        verifica (x, y, z) = 0 para todos x, y, z pertencente A.
         """
 
         trincas = itertools.product(self.algebra.base, repeat=3)
@@ -86,7 +88,8 @@ class VerificadorAxiomas(AvaliadorAlgebrico):
 
     def comutatividade(self):
         """
-        Método destinado à verificação da comutatividade
+        Método destinado à verificação da comutatividade, dado uma álgebra A
+        verifica (x, y) = 0 para todos x, y pertencente A.
         """
 
         pares = itertools.product(self.algebra.base, repeat=2)
@@ -110,6 +113,11 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
         super().__init__(algebra)
 
     def alternatividade(self):
+        """
+        Método destinado à verificação da alternatividade, dado uma álgebra A
+        verifica (x, x, y) = 0 e (y, x, x) = 0 para todos x, y pertencente A.
+        """
+
         pares = itertools.product(self.algebra.base, repeat=2)
         alternativa = True
 
@@ -132,6 +140,11 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
         return alternativa
 
     def flexibilidade(self):
+        """
+        Método destinado à verificação da flexibilidade, dado uma álgebra A
+        verifica (x, y, x) = 0 para todos x, y pertencente A.
+        """
+
         pares = itertools.product(self.algebra.base, repeat=2)
         flexivel = True
 
