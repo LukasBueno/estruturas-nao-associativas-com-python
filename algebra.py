@@ -32,7 +32,7 @@ class AlgebraPorTabela(Algebra):
         return self._regras.get(produto, 0)
 
 
-class AvaliadorAlgebrico(ABC):
+class AvaliadorAlgebrico:
     def __init__(self, algebra: Algebra):
         self.algebra = algebra
 
@@ -117,7 +117,7 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
         Método destinado à verificação da alternatividade por linearização, dado uma álgebra A
         verifica (x, y, z) + (y, x, z) = 0 e (z, x, y) + (z, y, x) = 0  para todos x, y e z pertencente A.
         """
-        
+
         trincas = itertools.product(self.algebra.base, repeat=3)
         alternativa = True
 
