@@ -114,24 +114,26 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
 
     def alternatividade(self):
         """
-        Método destinado à verificação da alternatividade, dado uma álgebra A
-        verifica (x, x, y) = 0 e (y, x, x) = 0 para todos x, y pertencente A.
+        Método destinado à verificação da alternatividade por linearização, dado uma álgebra A
+        verifica (x, y, z) + (y, x, z) = 0 e (z, x, y) + (z, y, x) = 0  para todos x, y e z pertencente A.
         """
-
-        pares = itertools.product(self.algebra.base, repeat=2)
+        
+        trincas = itertools.product(self.algebra.base, repeat=3)
         alternativa = True
 
-        for x, y in pares:
-            assoc_esquerda = self.calcular_associador_base(x, x, y)
+        for x, y, z in trincas:
+            assoc_esquerda_primeiro = self.calcular_associador_base(x, y, z)
+            assoc_esquerda_segundo = self.calcular_associador_base(y, x, z)
 
-            if assoc_esquerda != 0:
-                print(f"[Falha na alternatividade] Não é alternativa na esquerda em ({x}, {x}, {y})")
+            if (assoc_esquerda_primeiro + assoc_esquerda_segundo) != 0:
+                print(f"[Falha na alternatividade] Não é alternativa na esquerda em ({x}, {y}, {z})")
                 alternativa = False
 
-            assoc_direita = self.calcular_associador_base(y, x, x)
+            assoc_direita_primeiro = self.calcular_associador_base(z, x, y)
+            assoc_direita_segundo = self.calcular_associador_base(z, y, x)
 
-            if assoc_direita != 0:
-                print(f"[Falha na alternatividade] Não é alternativa na direita em ({y}, {x}, {x})")
+            if (assoc_direita_primeiro + assoc_direita_segundo) != 0:
+                print(f"[Falha na alternatividade] Não é alternativa na direita em ({z}, {x}, {y})")
                 alternativa = False 
 
         if alternativa:
