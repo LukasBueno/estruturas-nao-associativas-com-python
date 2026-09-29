@@ -114,26 +114,24 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
 
     def alternatividade(self):
         """
-        Método destinado à verificação da alternatividade por linearização, dado uma álgebra A
-        verifica (x, y, z) + (y, x, z) = 0 e (z, x, y) + (z, y, x) = 0  para todos x, y e z pertencente A.
+        Verifica a alternatividade pelas formas linearizadas.
+        Para todos x, y, z pertencentes à base de uma álgebra A:
+        (x, y, z) + (y, x, z) = 0       (alternatividade à esquerda)
+        (z, x, y) + (z, y, x) = 0       (alternatividade à direita)
         """
 
         trincas = itertools.product(self.algebra.base, repeat=3)
         alternativa = True
 
         for x, y, z in trincas:
-            assoc_esquerda_primeiro = self.calcular_associador_base(x, y, z)
-            assoc_esquerda_segundo = self.calcular_associador_base(y, x, z)
-
-            if (assoc_esquerda_primeiro + assoc_esquerda_segundo) != 0:
-                print(f"[Falha na alternatividade] Não é alternativa na esquerda em ({x}, {y}, {z})")
+            soma_esquerda = sp.simplify(self.calcular_associador_base(x, y, z) + self.calcular_associador_base(y, x, z))
+            if soma_esquerda != 0:
+                print(f"[Falha na alternatividade à esquerda] Associador({x}, {y}, {z}) + Associador({y}, {x}, {z}) = {soma_esquerda}")
                 alternativa = False
 
-            assoc_direita_primeiro = self.calcular_associador_base(z, x, y)
-            assoc_direita_segundo = self.calcular_associador_base(z, y, x)
-
-            if (assoc_direita_primeiro + assoc_direita_segundo) != 0:
-                print(f"[Falha na alternatividade] Não é alternativa na direita em ({z}, {x}, {y})")
+            soma_direita = sp.simplify(self.calcular_associador_base(z, x, y) + self.calcular_associador_base(z, y, x))
+            if soma_direita != 0:
+                print(f"[Falha na alternatividade à direita] Associador({z}, {x}, {y}) + Associador({z}, {y}, {x}) = {soma_direita}")
                 alternativa = False 
 
         if alternativa:
@@ -143,18 +141,18 @@ class VerificadorIdentidades(AvaliadorAlgebrico):
 
     def flexibilidade(self):
         """
-        Método destinado à verificação da flexibilidade, dado uma álgebra A
-        verifica (x, y, x) = 0 para todos x, y pertencente A.
+        Verifica a flexibilidade pela forma linearizada.
+        Para todos x, y, z pertencentes à base de uma álgebra A:
+        (x, y, z) + (z, y, x) = 0
         """
 
-        pares = itertools.product(self.algebra.base, repeat=2)
+        trincas = itertools.product(self.algebra.base, repeat=3)
         flexivel = True
 
-        for x, y in pares:
-            flex = self.calcular_associador_base(x, y, x)
-
-            if flex != 0:
-                print(f'[Falha na flexibilidade] Não é flexível em ({x}, {y}, {x}))')
+        for x, y, z in trincas:
+            soma_flex = sp.simplify(self.calcular_associador_base(x, y, z) + self.calcular_associador_base(z, y, x))
+            if soma_flex != 0:
+                print(f'[Falha na flexibilidade] Associador({x}, {y}, {z}) + Associador({z}, {y}, {x}) = {soma_flex}')
                 flexivel = False
 
         if flexivel:
