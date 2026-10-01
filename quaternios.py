@@ -14,12 +14,12 @@ def main():
     quaternios = AlgebraPorTabela(base, tabela_de_multiplicacao)
     verificador = VerificadorAxiomas(quaternios)
     verificador_id = VerificadorIdentidades(quaternios)
-    
-    print("------ASSOCIATIVIDADE------")
-    verificador.associatividade()
 
     print("------COMUTATIVIDADE------")
     verificador.comutatividade()
+   
+    print("------ASSOCIATIVIDADE------")
+    verificador.associatividade()
 
     print("------ALTERNATIVIDADE------")
     verificador_id.alternatividade()

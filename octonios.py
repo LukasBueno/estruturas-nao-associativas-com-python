@@ -10,7 +10,6 @@ def main():
     for e in base_octonios:
         tabela_octonios[e0 * e] = e
         tabela_octonios[e * e0] = e
-    tabela_octonios[e0 * e0] = e0
 
     # Quadrado dos imaginários (-e0) == -1
     for i in range(1, 8):
@@ -39,11 +38,11 @@ def main():
     verificador_ax = VerificadorAxiomas(octonios)
     verificador_id = VerificadorIdentidades(octonios)
 
-    print("-------- ASSOCIATIVIDADE ---------")
-    verificador_ax.associatividade()
-
     print("-------- COMUTATIVIDADE ---------")
     verificador_ax.comutatividade()
+    
+    print("-------- ASSOCIATIVIDADE ---------")
+    verificador_ax.associatividade()
 
     print("-------- ALTERNATIVIDADE ---------")
     verificador_id.alternatividade()

@@ -15,11 +15,11 @@ def main():
     verificador = VerificadorAxiomas(exemplo_livro)
     verificador_id = VerificadorIdentidades(exemplo_livro)
 
-    print("------[ASSOCIATIVIDADE]------")
-    verificador.associatividade()
-
     print("------[COMUTATIVIDADE]------")
     verificador.comutatividade()
+    
+    print("------[ASSOCIATIVIDADE]------")
+    verificador.associatividade()
 
     print("------[ALTERNATIVIDADE]------")
     verificador_id.alternatividade()
